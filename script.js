@@ -25,7 +25,7 @@ async function getWeather(keyword,unit,changeImg){
 
 async function getImg(keyword){
     try{
-        const response = await fetch("https://api.giphy.com/v1/gifs/translate?api_key=ytpfw643S4754fwpWwpwN8RONluD5T8x&s="+keyword);
+        const response = await fetch("https://api.giphy.com/v1/gifs/translate?api_key=ytpfw643S4754fwpWwpwN8RONluD5T8x&s="+keyword, {mode:"cors"});
         const data = await response.json();
         img.src=data.data.images.original.url;
     }
