@@ -9,7 +9,7 @@ let unit="imperial";
 
 async function getWeather(keyword,unit,changeImg){
     try{
-        const response=await fetch("http://api.openweathermap.org/data/2.5/weather?appid=03471e7ec8e15c4f269555bdbb77481a&q="+keyword+"&units="+unit);
+        const response=await fetch("http://api.openweathermap.org/data/2.5/weather?appid=03471e7ec8e15c4f269555bdbb77481a&q="+keyword+"&units="+unit, {mode:"cors"});
         const data=await response.json();
 
         const str=keyword.charAt(0).toUpperCase()+keyword.slice(1);
