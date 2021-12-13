@@ -1,14 +1,13 @@
 const input=document.querySelector("input");
 const submit=document.querySelector(".submit");
-const f=document.querySelector(".f");
-const c=document.querySelector(".c");
+const btns=document.querySelectorAll("button");
 const p=document.querySelector("h2");
 const img=document.querySelector("img");
 
 let keyword="tokyo";
 let unit="imperial";
 
-async function getWeather(keyword,unit){
+async function getWeather(keyword,unit,changeImg){
     try{
         const response=await fetch("http://api.openweathermap.org/data/2.5/weather?appid=03471e7ec8e15c4f269555bdbb77481a&q="+keyword+"&units="+unit);
         const data=await response.json();
@@ -16,10 +15,11 @@ async function getWeather(keyword,unit){
         const str=keyword.charAt(0).toUpperCase()+keyword.slice(1);
         const symbol=unit==="imperial"?"F":"C";
         p.textContent=str+" temperature: "+data.main.temp+" "+symbol;
-        getImg(keyword);
+        if(changeImg) getImg(keyword);
     }
     catch(e){
-        p.textContent=e;
+        p.textContent="Error: please re-enter.";
+        img.src="";
     }
 }
 
@@ -30,30 +30,23 @@ async function getImg(keyword){
         img.src=data.data.images.original.url;
     }
     catch(e){
-        
+        img.src="";
     }
 }
 
-submit.addEventListener("click",()=>{
-    if(!input.value) p.textContent="Please enter a location";
-    else{
-        keyword=input.value;
-        getWeather(keyword,unit);
-    }
-});
-
-f.addEventListener("click",()=>{
-    if(!input.value) p.textContent="Please enter a location";
-    else{
-        unit="imperial";
-        getWeather(keyword,unit);
-    }
-});
-
-c.addEventListener("click",()=>{
-    if(!input.value) p.textContent="Please enter a location";
-    else{
-        unit="metric";
-        getWeather(keyword,unit);
-    }
+btns.forEach(btn=>{
+    btn.addEventListener("click",function(e){
+        if(input.value){
+            let changeImg=false;
+            keyword=input.value;
+            if(e.target.className==="submit") changeImg=true;
+            else if(e.target.className==="f") unit="imperial";
+            else unit="metric";
+            getWeather(keyword,unit,changeImg);
+        }
+        else{
+            p.textContent="Please enter a location.";
+            img.src="";
+        }
+    });
 });
