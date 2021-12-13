@@ -9,7 +9,7 @@ let unit="imperial";
 
 async function getWeather(keyword,unit,changeImg){
     try{
-        const response=await fetch("http://api.openweathermap.org/data/2.5/weather?appid=03471e7ec8e15c4f269555bdbb77481a&q="+keyword+"&units="+unit, {mode:"cors"});
+        const response=await fetch("https://api.openweathermap.org/data/2.5/weather?appid=03471e7ec8e15c4f269555bdbb77481a&q="+keyword+"&units="+unit);
         const data=await response.json();
 
         const str=keyword.charAt(0).toUpperCase()+keyword.slice(1);
@@ -25,7 +25,7 @@ async function getWeather(keyword,unit,changeImg){
 
 async function getImg(keyword){
     try{
-        const response = await fetch("https://api.giphy.com/v1/gifs/translate?api_key=ytpfw643S4754fwpWwpwN8RONluD5T8x&s="+keyword, {mode:"cors"});
+        const response = await fetch("https://api.giphy.com/v1/gifs/translate?api_key=ytpfw643S4754fwpWwpwN8RONluD5T8x&s="+keyword);
         const data = await response.json();
         img.src=data.data.images.original.url;
     }
